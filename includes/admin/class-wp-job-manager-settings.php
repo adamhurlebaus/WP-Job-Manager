@@ -146,6 +146,15 @@ class WP_Job_Manager_Settings {
 							'attributes' => array()
 						),
 						array(
+							'name'       => 'job_manager_edit_requires_reapproval',
+							'std'        => '1',
+							'label'      => __( 'Moderate Edited Listings', 'wp-job-manager' ),
+							'cb_label'   => __( 'Listing revisions require admin approval before publishing', 'wp-job-manager' ),
+							'desc'       => __( 'If enabled, edited listings which were previously published will be inactive, pending admin approval.', 'wp-job-manager' ),
+							'type'       => 'checkbox',
+							'attributes' => array()
+						),
+						array(
 							'name'       => 'job_manager_user_can_edit_pending_submissions',
 							'std'        => '0',
 							'label'      => __( 'Allow Pending Edits', 'wp-job-manager' ),
