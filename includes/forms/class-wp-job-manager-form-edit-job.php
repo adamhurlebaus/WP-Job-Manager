@@ -109,11 +109,22 @@ class WP_Job_Manager_Form_Edit_Job extends WP_Job_Manager_Form_Submit_Job {
 			// Update the job
 			$this->save_job( $values['job']['job_title'], $values['job']['job_description'], '', $values, false );
 			$this->update_job_data( $values );
+			
+			if ( get_option( 'job_manager_edit_requires_reapproval' ) ){
+				$update_job                  = array();
+				$update_job['ID']            = $this->job_id;
+				$update_job['post_status']   = 'pending';
+
+				wp_update_post( $update_job );
+			}
 
 			// Successful
 			switch ( get_post_status( $this->job_id ) ) {
 				case 'publish' :
 					echo '<div class="job-manager-message">' . __( 'Your changes have been saved.', 'wp-job-manager' ) . ' <a href="' . get_permalink( $this->job_id ) . '">' . __( 'View &rarr;', 'wp-job-manager' ) . '</a>' . '</div>';
+				break;
+				case 'pending' :
+					echo '<div class="job-manager-message">' . __( 'Your changes have been saved.  Your listing is now inactive pending approval', 'wp-job-manager' ) . '</div>';
 				break;
 				default :
 					echo '<div class="job-manager-message">' . __( 'Your changes have been saved.', 'wp-job-manager' ) . '</div>';
